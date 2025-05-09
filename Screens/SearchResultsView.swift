@@ -10,6 +10,7 @@ import MusicKit
 
 struct SearchResultsView: View {
     private let player: ApplicationMusicPlayer = .shared
+    @ObservedObject private var playerState: ApplicationMusicPlayer.State = ApplicationMusicPlayer.shared.state
     
     @State private var searchTerm: String = ""
     @State private var songs: MusicItemCollection<Song> = []
@@ -22,12 +23,14 @@ struct SearchResultsView: View {
                 .onSubmit {
                     searchMusic(for: searchTerm)
                 }
-            ForEach(songs) { song in
-                Button (action: {
-                    selectedSong = song
-                    handlePlay()
-                }) {
-                    MusicItemEntry(for: song)
+            ScrollView {
+                ForEach(songs) { song in
+                    Button (action: {
+                        selectedSong = song
+                        handlePlayPressed()
+                    }) {
+                        MusicItemEntry(for: song, isPlaying: player.queue.currentEntry?.item?.id == song.id && playerState.playbackStatus == .playing)
+                    }
                 }
             }
         }
@@ -54,9 +57,11 @@ struct SearchResultsView: View {
     }
     
     @MainActor
-    private func handlePlay() -> Void {
+    private func handlePlayPressed() -> Void {
         Task {
-            if selectedSong != nil {
+            if player.queue.currentEntry?.item?.id == selectedSong.unsafelyUnwrapped.id && playerState.playbackStatus == .playing {
+                player.pause()
+            } else {
                 player.queue = [selectedSong.unsafelyUnwrapped]
                 try await player.play()
             }
