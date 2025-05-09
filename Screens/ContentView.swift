@@ -8,17 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var showStartScreen: Bool = true
+    
     var body: some View {
-        NavigationView {
-            ZStack {
-                Color.black.ignoresSafeArea()
+        SearchMusicView()
+            .fullScreenCover(isPresented: $showStartScreen) {
                 VStack(spacing: 40) {
                     Text("Vibe")
                         .font(.system(size: 72, weight: .bold, design: .rounded))
                         .shadow(radius: 10)
                         .foregroundStyle(LinearGradient(gradient: Gradient(colors: [Color.orange, Color.yellow]), startPoint: .topLeading, endPoint: .bottomTrailing))
                     
-                    NavigationLink(destination: SearchMusicView().navigationBarHidden(true)) {
+                    Button(action: startGroove) {
                         Text("Start a Groove")
                             .font(.title3)
                             .fontWeight(.semibold)
@@ -30,8 +31,11 @@ struct ContentView: View {
                             .shadow(radius: 10)
                     }
                 }
-            }
-        }
+            }.preferredColorScheme(ColorScheme.dark)
+    }
+    
+    private func startGroove() -> Void {
+        showStartScreen.toggle()
     }
 }
 
