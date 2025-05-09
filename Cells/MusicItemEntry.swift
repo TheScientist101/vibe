@@ -6,27 +6,30 @@ struct MusicItemEntry: View {
     private let playable: PlayableMusicItem
     private let artist: String?
     private let artwork: Artwork?
-    @State public var isPlaying: Bool = false
+    public let isPlaying: Bool
     
-    init(for album: Album) {
+    init(for album: Album, isPlaying: Bool) {
         playable = album
         name = album.title
         artist = album.artistName
         artwork = album.artwork
+        self.isPlaying = isPlaying
     }
     
-    init(for playlist: Playlist) {
+    init(for playlist: Playlist, isPlaying: Bool) {
         playable = playlist
         name = playlist.name
         artist = playlist.curator?.name
         artwork = playlist.artwork
+        self.isPlaying = isPlaying
     }
     
-    init(for song: Song) {
+    init(for song: Song, isPlaying: Bool) {
         playable = song
         name = song.title
         artist = song.artistName
         artwork = song.artwork
+        self.isPlaying = isPlaying
     }
     
     var body: some View {
