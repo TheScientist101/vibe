@@ -45,8 +45,7 @@ struct MusicItemEntry: View {
     
     private func play() -> Void {
         Task {
-            try await player.queue.insert(playable, position: MusicPlayer.Queue.EntryInsertionPosition.afterCurrentEntry)
-            try await player.skipToNextEntry()
+            player.queue = [playable]
             try await player.play()
         }
     }
