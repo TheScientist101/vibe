@@ -15,7 +15,8 @@ struct SearchMusicView: View {
     @State private var searchTerm: String = ""
     @State private var songs: MusicItemCollection<Song> = []
     
-    @State var selectedSong: Song?
+    @State private var selectedSong: Song?
+    @State private var showLoadingIndicator: Bool = false
     
     var body: some View {
         VStack {
@@ -24,6 +25,12 @@ struct SearchMusicView: View {
                     searchMusic(for: searchTerm)
                 }
             ScrollView {
+                if showLoadingIndicator {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .controlSize(.large)
+                }
+                    
                 ForEach(songs) { song in
                     Button (action: {
                         selectedSong = song
@@ -35,6 +42,7 @@ struct SearchMusicView: View {
             }
         }
         .padding()
+        .preferredColorScheme(.dark)
     }
     
     @MainActor
@@ -45,6 +53,8 @@ struct SearchMusicView: View {
     }
     
     private func searchMusic(for searchTerm: String) -> Void {
+        showLoadingIndicator = true
+        
         Task {
             var searchRequest = MusicCatalogSearchRequest(term: searchTerm, types: [Song.self, Album.self, Playlist.self])
             searchRequest.includeTopResults.toggle()
@@ -53,6 +63,7 @@ struct SearchMusicView: View {
             let searchResponse = try await searchRequest.response()
             
             player.pause()
+            showLoadingIndicator = false
             
             self.apply(searchResponse, for: searchTerm)
         }
