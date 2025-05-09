@@ -36,7 +36,8 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				ContentView.swift,
-				SearchResultsView.swift,
+				SearchMusicView.swift,
+				StartView.swift,
 			);
 			target = 291963692DCC4BE1004CF97E /* vibe */;
 		};

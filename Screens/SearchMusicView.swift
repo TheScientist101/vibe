@@ -1,5 +1,5 @@
 //
-//  SearchResultsView.swift
+//  SearchMusicView.swift
 //  vibe
 //
 //  Created by Urjith Mishra on 5/8/25.
@@ -8,10 +8,10 @@
 import SwiftUI
 import MusicKit
 
-struct SearchResultsView: View {
+struct SearchMusicView: View {
     private let player: ApplicationMusicPlayer = .shared
     @ObservedObject private var playerState: ApplicationMusicPlayer.State = ApplicationMusicPlayer.shared.state
-    
+
     @State private var searchTerm: String = ""
     @State private var songs: MusicItemCollection<Song> = []
     
@@ -52,6 +52,8 @@ struct SearchResultsView: View {
             
             let searchResponse = try await searchRequest.response()
             
+            player.pause()
+            
             self.apply(searchResponse, for: searchTerm)
         }
     }
@@ -70,5 +72,5 @@ struct SearchResultsView: View {
 }
 
 #Preview {
-    SearchResultsView()
+    SearchMusicView()
 }
