@@ -6,13 +6,36 @@
 //
 
 import SwiftUI
+import MusicKit
 
 struct ContentView: View {
     @State private var showStartScreen: Bool = true
+    @ObservedObject private var playerState: ApplicationMusicPlayer.State = ApplicationMusicPlayer.shared.state
     
     var body: some View {
-        SearchMusicView()
-            .fullScreenCover(isPresented: $showStartScreen) {
+        ZStack {
+            TabView {
+                SearchMusicView()
+                    .tabItem {
+                        Image(systemName: "music.note")
+                        Text("Find Music")
+                    }
+                
+                Text("Settings")
+                    .tabItem {
+                        Image(systemName: "gear")
+                        Text("Settings")
+                    }
+            }
+            
+            VStack {
+                Spacer()
+                Text((playerState.playbackStatus == .playing ? ApplicationMusicPlayer.shared.queue.currentEntry?.title : "No music playing") ?? "No music playing")
+                    .frame(maxWidth: .infinity, maxHeight: 1)
+                    .foregroundColor(.red)
+                    .padding(60)
+            }
+        }.fullScreenCover(isPresented: $showStartScreen) {
                 VStack(spacing: 40) {
                     Text("Vibe")
                         .font(.system(size: 72, weight: .bold, design: .rounded))
@@ -31,7 +54,8 @@ struct ContentView: View {
                             .shadow(radius: 10)
                     }
                 }
-            }.preferredColorScheme(ColorScheme.dark)
+            }
+        .preferredColorScheme(ColorScheme.dark)
     }
     
     private func startGroove() -> Void {
