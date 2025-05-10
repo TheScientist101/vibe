@@ -37,7 +37,5 @@ func (s *Server) registerRoutes() {
 		s.Melody.HandleRequest(ctx.Writer, ctx.Request)
 	})
 
-	s.Melody.HandleMessage(func(s *melody.Session, msg []byte) {
-
-	})
+	s.Melody.HandleMessage(s.QueueMgr.HandleMessage)
 }

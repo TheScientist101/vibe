@@ -2,7 +2,10 @@ package groove
 
 import (
 	"encoding/json"
+	"log"
+	"time"
 	"vibe/internal/common"
+	"vibe/internal/models"
 
 	"github.com/olahol/melody"
 )
@@ -19,7 +22,7 @@ func NewGroove(m *melody.Melody) *GrooveRouter {
 	}
 }
 
-func (m *GrooveRouter) handleMessage(s *melody.Session, msg []byte) {
+func (m *GrooveRouter) HandleMessage(s *melody.Session, msg []byte) {
 	var packet common.Packet
 	if err := json.Unmarshal(msg, &packet); err != nil {
 		errorMsg, _ := json.Marshal(common.Packet{
@@ -31,9 +34,40 @@ func (m *GrooveRouter) handleMessage(s *melody.Session, msg []byte) {
 	}
 
 	switch packet.Type {
+	case "get_song_data_by_isrc":
+		song, err := models.FindSongByISRC(packet.Payload.(string))
+		if err != nil {
+			errorMsg, _ := json.Marshal(common.Packet{
+				Type:    "error",
+				Time:    time.Now(),
+				Payload: "Invalid ISRC",
+			})
+			s.Write(errorMsg)
+			return
+		}
+
+		response := &common.Packet{
+			Type:    "song_data",
+			Time:    time.Now(),
+			Payload: song,
+		}
+
+		jsonResponse, err := json.Marshal(response)
+		if err != nil {
+			errorMsg, _ := json.Marshal(common.Packet{
+				Type:    "error",
+				Time:    time.Now(),
+				Payload: "Invalid ISRC",
+			})
+			s.Write(errorMsg)
+			return
+		}
+
+		s.Write(jsonResponse)
 	case "add_song":
 		// TODO: Figure out how to assign sessions and things
 
 	default:
+		log.Println(packet)
 	}
 }
