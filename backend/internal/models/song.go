@@ -29,7 +29,7 @@ type metadata struct {
 	} `xml:"isrc"`
 }
 
-func findSongByISRC(isrc string) (*Song, error) {
+func FindSongByISRC(isrc string) (*Song, error) {
 	response, err := http.Get("https://musicbrainz.org/ws/2/isrc/" + isrc + "?inc=artist-rels")
 	if err != nil {
 		return nil, err

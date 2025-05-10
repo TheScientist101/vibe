@@ -1,37 +1,36 @@
-package models
+package groove
 
 import (
 	"encoding/json"
 	"slices"
 	"time"
+	"vibe/internal/common"
+	"vibe/internal/models"
 
 	"github.com/olahol/melody"
 )
 
-type QueueEntry struct {
-	Song
-}
-
 type Groove struct {
 	*melody.Melody
 	connectedDevices []*melody.Session // Limit of 10 devices? maybe more... idk but then it should be without individual sessions?
-	queue            []*Song
+	queue            []*models.Song
 	playing          bool
 	nextSongStart    time.Time
 	maxLatency       time.Duration
 }
 
 func (g *Groove) addSongToQueue(isrc string, index int) error {
-	song, err := findSongByISRC(isrc)
+	song, err := models.FindSongByISRC(isrc)
 	if err != nil {
 		return err
 	}
 
 	slices.Insert(g.queue, index, song)
 
-	bytes, err := json.Marshal(&WebsocketPacket{
-		Type: "queue_update",
-		Data: g.queue,
+	bytes, err := json.Marshal(&common.Packet{
+		Type:    "queue_update",
+		Payload: g.queue,
+		Time:    time.Now(),
 	})
 	if err != nil {
 		return err
