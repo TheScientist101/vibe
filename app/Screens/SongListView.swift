@@ -10,7 +10,7 @@ import MusicKit
 
 struct SongListView: View {
     let songs: MusicItemCollection<Song>
-    let currentSong: Song?
+    let currentSongID: MusicItemID?
     let isPlaying: Bool
     let onSelect: (Song) -> Void
 
@@ -22,7 +22,7 @@ struct SongListView: View {
                 }) {
                     MusicItemEntry(
                         for: song,
-                        isPlaying: currentSong?.id == song.id && isPlaying
+                        isPlaying: currentSongID == song.id && isPlaying
                     )
                 }
             }

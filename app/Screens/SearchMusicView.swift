@@ -37,7 +37,7 @@ struct SearchMusicView: View {
 
             SongListView(
                 songs: songs,
-                currentSong: player.queue.currentEntry?.item as? Song,
+                currentSongID: player.queue.currentEntry?.item?.id,
                 isPlaying: playerState.playbackStatus == .playing,
                 onSelect: handlePlayPressed
             )
