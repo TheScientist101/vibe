@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		BFFAE8C12DCFB1AF00921F62 /* SpotifyiOS in Frameworks */ = {isa = PBXBuildFile; productRef = BFFAE8C02DCFB1AF00921F62 /* SpotifyiOS */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		2919636A2DCC4BE1004CF97E /* vibe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vibe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -86,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFFAE8C12DCFB1AF00921F62 /* SpotifyiOS in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,6 +136,7 @@
 			);
 			name = vibe;
 			packageProductDependencies = (
+				BFFAE8C02DCFB1AF00921F62 /* SpotifyiOS */,
 			);
 			productName = vibe;
 			productReference = 2919636A2DCC4BE1004CF97E /* vibe.app */;
@@ -160,6 +166,9 @@
 			);
 			mainGroup = 291963612DCC4BE1004CF97E;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				BFFAE8BF2DCFB1AF00921F62 /* XCRemoteSwiftPackageReference "ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2919636B2DCC4BE1004CF97E /* Products */;
 			projectDirPath = "";
@@ -394,6 +403,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		BFFAE8BF2DCFB1AF00921F62 /* XCRemoteSwiftPackageReference "ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/spotify/ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BFFAE8C02DCFB1AF00921F62 /* SpotifyiOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BFFAE8BF2DCFB1AF00921F62 /* XCRemoteSwiftPackageReference "ios-sdk" */;
+			productName = SpotifyiOS;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 291963622DCC4BE1004CF97E /* Project object */;
 }
