@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MusicKit
+import ImageIO
 
 struct SearchMusicView: View {
     private let player: ApplicationMusicPlayer = .shared
@@ -19,8 +20,13 @@ struct SearchMusicView: View {
     
     var body: some View {
         VStack {
-            TextField("Search Term", text: $searchTerm)
+            TextField("Search Music", text: $searchTerm)
                 .onSubmit(searchMusic)
+                .padding(.vertical, 8)
+                .background(Color.gray.opacity(0.2))
+                .cornerRadius(12)
+                .multilineTextAlignment(.center)
+                
 
             if isLoading {
                 ProgressView()
@@ -78,4 +84,8 @@ struct SearchMusicView: View {
             }
         }
     }
+}
+
+#Preview {
+    SearchMusicView()
 }
