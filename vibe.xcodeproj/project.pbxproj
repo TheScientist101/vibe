@@ -11,6 +11,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		290BBBBC2DCEDF2000CE10CC /* Exceptions for "Screens" folder in "vibe" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ContentView.swift,
+				MainTabView.swift,
+				PlayerStatusBar.swift,
+				SearchMusicView.swift,
+				SongListView.swift,
+				StartView.swift,
+			);
+			target = 291963692DCC4BE1004CF97E /* vibe */;
+		};
 		29A63E182DCD803700A4AFA5 /* Exceptions for "SupportingFiles" folder in "vibe" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -32,18 +44,17 @@
 			);
 			target = 291963692DCC4BE1004CF97E /* vibe */;
 		};
-		29D80B6E2DCD776400E18292 /* Exceptions for "Screens" folder in "vibe" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				ContentView.swift,
-				SearchMusicView.swift,
-				StartView.swift,
-			);
-			target = 291963692DCC4BE1004CF97E /* vibe */;
-		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		290BBBB82DCEDF2000CE10CC /* Screens */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				290BBBBC2DCEDF2000CE10CC /* Exceptions for "Screens" folder in "vibe" target */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
 		29A63E192DCD862500A4AFA5 /* Cells */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -58,14 +69,6 @@
 				29D80B6D2DCD776400E18292 /* Exceptions for "App" folder in "vibe" target */,
 			);
 			path = App;
-			sourceTree = "<group>";
-		};
-		29D80B672DCD776300E18292 /* Screens */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				29D80B6E2DCD776400E18292 /* Exceptions for "Screens" folder in "vibe" target */,
-			);
-			path = Screens;
 			sourceTree = "<group>";
 		};
 		29D80B692DCD776300E18292 /* SupportingFiles */ = {
@@ -92,9 +95,9 @@
 		291963612DCC4BE1004CF97E = {
 			isa = PBXGroup;
 			children = (
-				29A63E192DCD862500A4AFA5 /* Cells */,
 				29D80B652DCD776300E18292 /* App */,
-				29D80B672DCD776300E18292 /* Screens */,
+				29A63E192DCD862500A4AFA5 /* Cells */,
+				290BBBB82DCEDF2000CE10CC /* Screens */,
 				29D80B692DCD776300E18292 /* SupportingFiles */,
 				2919636B2DCC4BE1004CF97E /* Products */,
 			);
