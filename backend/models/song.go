@@ -3,12 +3,14 @@ package models
 import (
 	"encoding/xml"
 	"net/http"
+	"time"
 )
 
 type Song struct {
-	Name   string
-	Artist string
-	ISRC   string
+	Name     string        `json:"name"`
+	Artist   string        `json:"artist"`
+	Duration time.Duration `json:"duration"`
+	ISRC     string        `json:"isrc"`
 }
 
 type metadata struct {
@@ -17,6 +19,7 @@ type metadata struct {
 		ID        string `xml:"id,attr"`
 		Recording struct {
 			Title    string `xml:"title"`
+			Length   int64  `xml:"length"`
 			Relation struct {
 				Artist struct {
 					Name string `xml:"name"`
@@ -26,7 +29,7 @@ type metadata struct {
 	} `xml:"isrc"`
 }
 
-func FindSongByISRC(isrc string) (*Song, error) {
+func findSongByISRC(isrc string) (*Song, error) {
 	response, err := http.Get("https://musicbrainz.org/ws/2/isrc/" + isrc + "?inc=artist-rels")
 	if err != nil {
 		return nil, err
@@ -39,8 +42,9 @@ func FindSongByISRC(isrc string) (*Song, error) {
 	}
 
 	return &Song{
-		Name:   packed.ISRC.Recording.Title,
-		Artist: packed.ISRC.Recording.Relation.Artist.Name,
-		ISRC:   isrc,
+		Name:     packed.ISRC.Recording.Title,
+		Artist:   packed.ISRC.Recording.Relation.Artist.Name,
+		Duration: time.Duration(packed.ISRC.Recording.Length) * time.Millisecond,
+		ISRC:     isrc,
 	}, nil
 }
