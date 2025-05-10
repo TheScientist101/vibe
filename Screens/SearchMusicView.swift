@@ -42,6 +42,13 @@ struct SearchMusicView: View {
             }
         }
         .padding()
+        .onAppear {
+            Task {
+                if MusicAuthorization.currentStatus != .authorized {
+                    await MusicAuthorization.request()
+                }
+            }
+        }
         .preferredColorScheme(.dark)
     }
     

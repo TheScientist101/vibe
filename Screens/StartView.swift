@@ -18,7 +18,7 @@ struct StartView: View {
                     .shadow(radius: 10)
                     .foregroundStyle(LinearGradient(gradient: Gradient(colors: [Color.orange, Color.yellow]), startPoint: .topLeading, endPoint: .bottomTrailing))
                 
-                Button(action: {SearchMusicView()}) {
+                Button(action: {}) {
                     Text("Start a Groove")
                         .font(.title3)
                         .fontWeight(.semibold)
