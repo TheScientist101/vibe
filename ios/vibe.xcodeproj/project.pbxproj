@@ -6,9 +6,18 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		BFFAE8C12DCFB1AF00921F62 /* SpotifyiOS in Frameworks */ = {isa = PBXBuildFile; productRef = BFFAE8C02DCFB1AF00921F62 /* SpotifyiOS */; };
-/* End PBXBuildFile section */
+/* Begin PBXCopyFilesBuildPhase section */
+		BF7BA75B2DD216CF002EB729 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2919636A2DCC4BE1004CF97E /* vibe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vibe.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -48,7 +57,27 @@
 			);
 			target = 291963692DCC4BE1004CF97E /* vibe */;
 		};
+		BF7BA7572DD216C7002EB729 /* Exceptions for "Frameworks" folder in "vibe" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				SpotifyiOS.xcframework,
+			);
+			target = 291963692DCC4BE1004CF97E /* vibe */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		BF7BA75C2DD216CF002EB729 /* Exceptions for "Frameworks" folder in "Embed Frameworks" phase from "vibe" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			attributesByRelativePath = {
+				SpotifyiOS.xcframework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
+			};
+			buildPhase = BF7BA75B2DD216CF002EB729 /* Embed Frameworks */;
+			membershipExceptions = (
+				SpotifyiOS.xcframework,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		290BBBB82DCEDF2000CE10CC /* Screens */ = {
@@ -83,6 +112,15 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
+		BF7BA7522DD216B6002EB729 /* Frameworks */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				BF7BA7572DD216C7002EB729 /* Exceptions for "Frameworks" folder in "vibe" target */,
+				BF7BA75C2DD216CF002EB729 /* Exceptions for "Frameworks" folder in "Embed Frameworks" phase from "vibe" target */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +128,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFFAE8C12DCFB1AF00921F62 /* SpotifyiOS in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +137,7 @@
 		291963612DCC4BE1004CF97E = {
 			isa = PBXGroup;
 			children = (
+				BF7BA7522DD216B6002EB729 /* Frameworks */,
 				29D80B652DCD776300E18292 /* App */,
 				29A63E192DCD862500A4AFA5 /* Cells */,
 				290BBBB82DCEDF2000CE10CC /* Screens */,
@@ -126,6 +164,7 @@
 				291963662DCC4BE1004CF97E /* Sources */,
 				291963672DCC4BE1004CF97E /* Frameworks */,
 				291963682DCC4BE1004CF97E /* Resources */,
+				BF7BA75B2DD216CF002EB729 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -136,7 +175,6 @@
 			);
 			name = vibe;
 			packageProductDependencies = (
-				BFFAE8C02DCFB1AF00921F62 /* SpotifyiOS */,
 			);
 			productName = vibe;
 			productReference = 2919636A2DCC4BE1004CF97E /* vibe.app */;
@@ -167,7 +205,6 @@
 			mainGroup = 291963612DCC4BE1004CF97E;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				BFFAE8BF2DCFB1AF00921F62 /* XCRemoteSwiftPackageReference "ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2919636B2DCC4BE1004CF97E /* Products */;
@@ -403,25 +440,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		BFFAE8BF2DCFB1AF00921F62 /* XCRemoteSwiftPackageReference "ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/spotify/ios-sdk";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		BFFAE8C02DCFB1AF00921F62 /* SpotifyiOS */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BFFAE8BF2DCFB1AF00921F62 /* XCRemoteSwiftPackageReference "ios-sdk" */;
-			productName = SpotifyiOS;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 291963622DCC4BE1004CF97E /* Project object */;
 }
