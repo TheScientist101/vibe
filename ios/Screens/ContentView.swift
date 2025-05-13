@@ -11,6 +11,7 @@ import MusicKit
 struct ContentView: View {
     @State private var showStartScreen: Bool = true
     @ObservedObject private var playerState = ApplicationMusicPlayer.shared.state
+    
 
     var body: some View {
         ZStack {
@@ -20,7 +21,6 @@ struct ContentView: View {
         .fullScreenCover(isPresented: $showStartScreen) {
             StartView(onStart: startGroove)
         }
-        .preferredColorScheme(.dark)
     }
 
     private func startGroove() {

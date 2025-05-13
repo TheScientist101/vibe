@@ -21,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		2919636A2DCC4BE1004CF97E /* vibe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vibe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF7BA7612DD3A670002EB729 /* vibe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "vibe-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -31,6 +32,7 @@
 				MainTabView.swift,
 				PlayerStatusBar.swift,
 				SearchMusicView.swift,
+				Settings.swift,
 				SongListView.swift,
 				StartView.swift,
 			);
@@ -137,6 +139,7 @@
 		291963612DCC4BE1004CF97E = {
 			isa = PBXGroup;
 			children = (
+				BF7BA7612DD3A670002EB729 /* vibe-Bridging-Header.h */,
 				BF7BA7522DD216B6002EB729 /* Frameworks */,
 				29D80B652DCD776300E18292 /* App */,
 				29A63E192DCD862500A4AFA5 /* Cells */,
@@ -380,9 +383,11 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-ObjcC";
 				PRODUCT_BUNDLE_IDENTIFIER = dev.urjith.VibeDev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "vibe-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -410,9 +415,11 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-ObjcC";
 				PRODUCT_BUNDLE_IDENTIFIER = dev.urjith.VibeDev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "vibe-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

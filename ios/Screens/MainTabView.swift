@@ -15,7 +15,7 @@ struct MainTabView: View {
                     Label("Find Music", systemImage: "music.note")
                 }
 
-            Text("Settings")
+            Settings()
                 .tabItem {
                     Label("Settings", systemImage: "gear")
                 }
