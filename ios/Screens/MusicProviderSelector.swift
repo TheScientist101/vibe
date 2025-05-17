@@ -7,27 +7,32 @@
 
 import Foundation
 import SwiftUI
+
+
 struct MusicProviderSelector : View {
-    @Published var musicProviderSpotify = false;
+    @State var musicProviderSpotify = false;
     var body: some View{
         VStack{
             Text("Select Your Music Provider:")
-            HStack{
-                Button(action: {musicProviderSpotify = true; print(musicProviderSpotify)
-                    }){
-                    Image("SpotifyLogo")
-                        .resizable()
-                        .frame(width: 100, height: 100)
-                }
-                Button(action: {musicProviderSpotify = false;
-                    
-                    print(musicProviderSpotify);
-                    }) {
-                    Image("AppleMusicLogo")
-                        .resizable()
-                        .frame(width: 100, height: 100)
-                }
+            Button(action: {musicProviderSpotify = false; print(musicProviderSpotify)}){
+                    Text("Spotify")
             }
+            .padding()
+            .foregroundStyle(.white)
+            .padding(.horizontal, 30)
+            .background(.green)
+            .cornerRadius(10)
+            .bold()
+            
+            Button(action: {musicProviderSpotify = true; print(musicProviderSpotify)}){
+                    Text("Apple Music")
+            }
+            .padding()
+            .foregroundStyle(.white)
+            .padding(.horizontal, 10)
+            .background(.pink)
+            .cornerRadius(10)
+            .bold()
         }
     }
     
