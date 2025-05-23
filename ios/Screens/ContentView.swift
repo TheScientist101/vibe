@@ -13,11 +13,27 @@ public enum MusicProvider: String{
     case apple
 }
 
+struct ConnectButtonWrapper: UIViewRepresentable {
+    let connectButton: UIButton
+    
+    func makeUIView(context: Context) -> UIButton {
+        return connectButton
+    }
+    
+    func updateUIView(_ uiView: UIButton, context: Context) {
+        
+    }
+}
+
 struct ContentView: View {
     @State private var showStartScreen: Bool = true
     @AppStorage("firstPickup") private var firstPickup = true
     @AppStorage("musicProvider") var musicProvider: MusicProvider = .apple
     @ObservedObject private var playerState = ApplicationMusicPlayer.shared.state
+    let viewController = ViewController()
+    var remoteDelegate: SPTAppRemoteDelegate
+    var appRemotes: SPTAppRemote
+    @State var connected = false;
     
 
     var body: some View {
@@ -25,14 +41,30 @@ struct ContentView: View {
             if firstPickup {
                 MusicProviderSelector(
                     firstPickup : $firstPickup,
-                    musicProvider: musicProvider)
+                    musicProvider: musicProvider,
+                    sessionManager: ViewController().sessionManager)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.black)
                     .ignoresSafeArea()
                     .zIndex(1)
                     .transition(.opacity)
-                
-                    
+            }
+            if !firstPickup && musicProvider == .spotify && !connected{
+                Button(action: {
+                    connected = true;
+                    viewController.didTapConnect(UIButton());
+                    remoteDelegate.appRemoteDidEstablishConnection(appRemotes)
+
+                }){
+                    Text("Connect to Spotify")
+                }
+                .zIndex(2)
+                .frame(width: 120, height: 50)
+                .foregroundStyle(.white)
+                .padding(.horizontal, 30)
+                .background(Color.green)
+                .bold()
+                .cornerRadius(20)
             }
             MainTabView()
             PlayerStatusBar(playerState: playerState)
@@ -48,6 +80,6 @@ struct ContentView: View {
     }
 }
 
-#Preview {
-    ContentView()
-}
+//#Preview {
+//    ContentView(musicProvider: .apple, remoteDelegate: SPTAppRemoteDelegate, connected: false)
+//}

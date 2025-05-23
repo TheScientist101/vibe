@@ -20,7 +20,6 @@ class ConnectButton: UIButton {
     init(title: String) {
         super.init(frame: CGRect.zero)
         backgroundColor = buttonBackgroundColor
-        contentEdgeInsets = UIEdgeInsets(top: 11.75, left: 32.0, bottom: 11.75, right: 32.0)
         layer.cornerRadius = 20.0
         translatesAutoresizingMaskIntoConstraints = false
         let title = NSAttributedString(string: title, attributes: titleAttributes)

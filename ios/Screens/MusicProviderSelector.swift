@@ -12,12 +12,15 @@ import SwiftUI
 struct MusicProviderSelector : View {
     @Binding var firstPickup: Bool
     @AppStorage("musicProvider") var musicProvider: MusicProvider = .apple
+    var sessionManager: SPTSessionManager
     var body: some View{
         VStack{
             Text("Select Your Music Provider:")
             Button(action: {musicProvider = .spotify;
                 firstPickup = false;
-                print(musicProvider)}){
+                print(musicProvider);
+                sessionManager.isSpotifyAppInstalled ? print("Spotify is installed") : print("Spotify not installed");}
+                ){
                     Text("Spotify")
             }
             .padding()
@@ -43,6 +46,6 @@ struct MusicProviderSelector : View {
     
     
 }
-#Preview{
-    MusicProviderSelector(firstPickup : .constant(true), musicProvider: .spotify)
-}
+//#Preview{
+//    MusicProviderSelector(firstPickup : .constant(true), musicProvider: .spotify, sessionManager: SPTSessionManager())
+//}

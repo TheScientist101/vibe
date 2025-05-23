@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct vibeApp: App {
+    let controller = ViewController()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(musicProvider: .apple, remoteDelegate: controller, appRemotes: controller.appRemote, connected: false)
         }
     }
 }
