@@ -8,20 +8,29 @@
 import SwiftUI
 import MusicKit
 
+public enum MusicProvider: String{
+    case spotify
+    case apple
+}
+
 struct ContentView: View {
     @State private var showStartScreen: Bool = true
     @AppStorage("firstPickup") private var firstPickup = true
+    @AppStorage("musicProvider") var musicProvider: MusicProvider = .apple
     @ObservedObject private var playerState = ApplicationMusicPlayer.shared.state
     
 
     var body: some View {
         ZStack {
             if firstPickup {
-                MusicProviderSelector(firstPickup : $firstPickup)
+                MusicProviderSelector(
+                    firstPickup : $firstPickup,
+                    musicProvider: musicProvider)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.black)
                     .ignoresSafeArea()
                     .zIndex(1)
+                    .transition(.opacity)
                 
                     
             }

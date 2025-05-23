@@ -9,9 +9,13 @@ import SwiftUI
 import MusicKit
 import ImageIO
 
+
+
+
 struct SearchMusicView: View {
     private let player: ApplicationMusicPlayer = .shared
     @ObservedObject private var playerState = ApplicationMusicPlayer.shared.state
+    @AppStorage("musicProvider") var musicProvider: MusicProvider = .apple
     
     @State private var searchTerm: String = ""
     @State private var songs: MusicItemCollection<Song> = []
@@ -76,11 +80,21 @@ struct SearchMusicView: View {
 
     private func handlePlayPressed(song: Song) {
         Task {
-            if player.queue.currentEntry?.item?.id == song.id, playerState.playbackStatus == .playing {
-                player.pause()
-            } else {
-                player.queue = [song]
-                try await player.play()
+            if musicProvider == .apple{
+                if player.queue.currentEntry?.item?.id == song.id, playerState.playbackStatus == .playing {
+                    player.pause()
+                } else {
+                    player.queue = [song]
+                    try await player.play()
+                }
+            }
+            else {
+                if player.queue.currentEntry?.item?.id == song.id, playerState.playbackStatus == .playing {
+                    player.pause()
+                } else {
+                    player.queue = [song]
+                    try await player.play()
+                }
             }
         }
     }

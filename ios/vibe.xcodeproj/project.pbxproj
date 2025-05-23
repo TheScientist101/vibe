@@ -22,13 +22,13 @@
 /* Begin PBXFileReference section */
 		2919636A2DCC4BE1004CF97E /* vibe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vibe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF7BA7612DD3A670002EB729 /* vibe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "vibe-Bridging-Header.h"; sourceTree = "<group>"; };
-		BFB5C3462DD3B36200957E1C /* SpotifyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
 		290BBBBC2DCEDF2000CE10CC /* Exceptions for "Screens" folder in "vibe" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				ConnectButton.swift,
 				ContentView.swift,
 				MainTabView.swift,
 				MusicProviderSelector.swift,
@@ -36,6 +36,7 @@
 				SearchMusicView.swift,
 				Settings.swift,
 				SongListView.swift,
+				SpotifyController.swift,
 				StartView.swift,
 			);
 			target = 291963692DCC4BE1004CF97E /* vibe */;
@@ -141,7 +142,6 @@
 		291963612DCC4BE1004CF97E = {
 			isa = PBXGroup;
 			children = (
-				BFB5C3462DD3B36200957E1C /* SpotifyController.swift */,
 				BF7BA7612DD3A670002EB729 /* vibe-Bridging-Header.h */,
 				BF7BA7522DD216B6002EB729 /* Frameworks */,
 				29D80B652DCD776300E18292 /* App */,

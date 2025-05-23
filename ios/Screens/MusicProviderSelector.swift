@@ -11,13 +11,13 @@ import SwiftUI
 
 struct MusicProviderSelector : View {
     @Binding var firstPickup: Bool
-    @State var musicProviderSpotify = false;
+    @AppStorage("musicProvider") var musicProvider: MusicProvider = .apple
     var body: some View{
         VStack{
             Text("Select Your Music Provider:")
-            Button(action: {musicProviderSpotify = true;
+            Button(action: {musicProvider = .spotify;
                 firstPickup = false;
-                print(musicProviderSpotify)}){
+                print(musicProvider)}){
                     Text("Spotify")
             }
             .padding()
@@ -27,9 +27,9 @@ struct MusicProviderSelector : View {
             .cornerRadius(10)
             .bold()
             
-            Button(action: {musicProviderSpotify = false;
+            Button(action: {musicProvider = .apple;
                 firstPickup = false;
-                print(musicProviderSpotify)}){
+                print(musicProvider)}){
                     Text("Apple Music")
             }
             .padding()
@@ -44,5 +44,5 @@ struct MusicProviderSelector : View {
     
 }
 #Preview{
-    MusicProviderSelector(firstPickup : .constant(true))
+    MusicProviderSelector(firstPickup : .constant(true), musicProvider: .spotify)
 }
