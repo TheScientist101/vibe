@@ -34,6 +34,7 @@
 				MusicProviderSelector.swift,
 				PlayerStatusBar.swift,
 				SearchMusicView.swift,
+				SearchMusicViewSpotify.swift,
 				Settings.swift,
 				SongListView.swift,
 				SpotifyController.swift,

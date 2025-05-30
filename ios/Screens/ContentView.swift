@@ -30,10 +30,11 @@ struct ContentView: View {
     @AppStorage("firstPickup") private var firstPickup = true
     @AppStorage("musicProvider") var musicProvider: MusicProvider = .apple
     @ObservedObject private var playerState = ApplicationMusicPlayer.shared.state
-    let viewController = ViewController()
-    var remoteDelegate: SPTAppRemoteDelegate
-    var appRemotes: SPTAppRemote
-    @State var connected = false;
+    @State private var clicked: Bool = false
+//    let viewController = ViewController()
+//    var remoteDelegate: SPTAppRemoteDelegate
+//    var appRemotes: SPTAppRemote
+//    @State var connected = false;
     
 
     var body: some View {
@@ -41,20 +42,21 @@ struct ContentView: View {
             if firstPickup {
                 MusicProviderSelector(
                     firstPickup : $firstPickup,
-                    musicProvider: musicProvider,
-                    sessionManager: ViewController().sessionManager)
+                    musicProvider: musicProvider)
+//                    sessionManager: ViewController().sessionManager)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.black)
                     .ignoresSafeArea()
                     .zIndex(1)
                     .transition(.opacity)
             }
-            if !firstPickup && musicProvider == .spotify && !connected{
+            if !firstPickup && musicProvider == .spotify && !clicked{
                 Button(action: {
-                    connected = true;
-                    viewController.didTapConnect(UIButton());
-                    remoteDelegate.appRemoteDidEstablishConnection(appRemotes)
-
+//                    connected = true;
+//                    viewController.didTapConnect(UIButton());
+//                    remoteDelegate.appRemoteDidEstablishConnection(appRemotes)
+                    firstPickup = false;
+                    clicked = true
                 }){
                     Text("Connect to Spotify")
                 }

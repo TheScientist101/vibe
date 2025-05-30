@@ -18,9 +18,10 @@ struct SearchMusicView: View {
     @AppStorage("musicProvider") var musicProvider: MusicProvider = .apple
     
     @State private var searchTerm: String = ""
+    @State private var isLoading: Bool = false
     @State private var songs: MusicItemCollection<Song> = []
     @State private var selectedSong: Song?
-    @State private var isLoading: Bool = false
+
     
     var body: some View {
         VStack {
@@ -49,7 +50,7 @@ struct SearchMusicView: View {
         .padding()
         .onAppear {
             Task {
-                if MusicAuthorization.currentStatus != .authorized {
+                if MusicAuthorization.currentStatus != .authorized && musicProvider == .apple{
                     print(await MusicAuthorization.request())
                 }
             }
@@ -80,21 +81,11 @@ struct SearchMusicView: View {
 
     private func handlePlayPressed(song: Song) {
         Task {
-            if musicProvider == .apple{
-                if player.queue.currentEntry?.item?.id == song.id, playerState.playbackStatus == .playing {
-                    player.pause()
-                } else {
-                    player.queue = [song]
-                    try await player.play()
-                }
-            }
-            else {
-                if player.queue.currentEntry?.item?.id == song.id, playerState.playbackStatus == .playing {
-                    player.pause()
-                } else {
-                    player.queue = [song]
-                    try await player.play()
-                }
+            if player.queue.currentEntry?.item?.id == song.id, playerState.playbackStatus == .playing {
+                player.pause()
+            } else {
+                player.queue = [song]
+                try await player.play()
             }
         }
     }
