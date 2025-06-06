@@ -2,17 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>SpotifyClientId</key>
+	<string>$(SPOTIFY_CLIENT_ID)</string>
+	<key>Auth0ClientID</key>
+	<string>$(AUTH0_CLIENT_ID)</string>
+	<key>Auth0Domain</key>
+	<string>$(AUTH0_DOMAIN)</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleURLName</key>
+			<string>spotify-auth</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>spotify-ios-quick-start</string>
+				<string>dev.urjith.VibeDev</string>
 			</array>
-		</dict>
-		<dict>
-			<key>CFBundleURLName</key>
-			<string>com.spotify.iOS-SDK-Quick-Start</string>
 		</dict>
 	</array>
 	<key>LSApplicationQueriesSchemes</key>
@@ -21,9 +25,5 @@
 	</array>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Vibe uses Apple Music to control your music during Grooves.</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>audio</string>
-	</array>
 </dict>
 </plist>

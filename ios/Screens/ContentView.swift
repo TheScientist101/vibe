@@ -30,11 +30,6 @@ struct ContentView: View {
     @AppStorage("firstPickup") private var firstPickup = true
     @AppStorage("musicProvider") var musicProvider: MusicProvider = .apple
     @ObservedObject private var playerState = ApplicationMusicPlayer.shared.state
-    @State private var clicked: Bool = false
-//    let viewController = ViewController()
-//    var remoteDelegate: SPTAppRemoteDelegate
-//    var appRemotes: SPTAppRemote
-//    @State var connected = false;
     
 
     var body: some View {
@@ -43,30 +38,19 @@ struct ContentView: View {
                 MusicProviderSelector(
                     firstPickup : $firstPickup,
                     musicProvider: musicProvider)
-//                    sessionManager: ViewController().sessionManager)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.black)
                     .ignoresSafeArea()
                     .zIndex(1)
                     .transition(.opacity)
             }
-            if !firstPickup && musicProvider == .spotify && !clicked{
-                Button(action: {
-//                    connected = true;
-//                    viewController.didTapConnect(UIButton());
-//                    remoteDelegate.appRemoteDidEstablishConnection(appRemotes)
-                    firstPickup = false;
-                    clicked = true
-                }){
-                    Text("Connect to Spotify")
-                }
-                .zIndex(2)
-                .frame(width: 120, height: 50)
-                .foregroundStyle(.white)
-                .padding(.horizontal, 30)
-                .background(Color.green)
-                .bold()
-                .cornerRadius(20)
+            if !firstPickup && musicProvider == .spotify{
+                SignInButton()
+                    .zIndex(2)
+                    .frame(width: 120, height: 50)
+                    .foregroundStyle(.white)
+                    .bold()
+                    .cornerRadius(20)
             }
             MainTabView()
             PlayerStatusBar(playerState: playerState)
@@ -81,7 +65,84 @@ struct ContentView: View {
         firstPickup = true
     }
 }
+struct SignInButton: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> SignInViewController {
+        return SignInViewController()
+    }
+    
+    func updateUIViewController(_ uiViewController: SignInViewController, context: Context) {
+    }
+}
 
-//#Preview {
-//    ContentView(musicProvider: .apple, remoteDelegate: SPTAppRemoteDelegate, connected: false)
-//}
+
+class SignInViewController: UIViewController {
+    @AppStorage("spotifyAccessToken") var spotifyAccessToken : String = ""
+    private var signInButton: UIButton!
+    private var clicked: Bool = false {
+        didSet {
+            if clicked {
+                signInButton?.isHidden = true
+            }
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupSignInButton()
+    }
+    
+    private func setupSignInButton() {
+        signInButton = UIButton(type: .system)
+        if clicked{
+            signInButton.isHidden = true
+        }
+        else {
+            signInButton.setTitle("Connect to Spotify", for: .normal)
+            signInButton.setTitleColor(.white, for: .normal)
+            signInButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
+            signInButton.configuration?.titlePadding = 30
+            signInButton.backgroundColor = .systemGreen
+            
+            signInButton.addTarget(self, action: #selector(signIn), for: .touchUpInside)
+            
+            view.addSubview(signInButton)
+            signInButton.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                signInButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                signInButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                signInButton.topAnchor.constraint(equalTo: view.topAnchor),
+                signInButton.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ])
+        }
+    }
+    
+    
+    @objc func signIn(_ sender: Any) {
+        let bundleIdentifier = Bundle.main.bundleIdentifier!
+        let spotifyClientId = Bundle.main.object(forInfoDictionaryKey: "SpotifyClientId") as! String
+        let authorizeURL = "https://accounts.spotify.com/authorize"
+        let tokenURL = "https://accounts.spotify.com/api/token"
+        let redirectUri = "\(bundleIdentifier)://callback"
+        let parameters = OAuth2PKCEParameters(
+            authorizeUrl: authorizeURL,
+            tokenUrl: tokenURL,
+            clientId: spotifyClientId,
+            redirectUri: redirectUri,
+            callbackURLScheme: bundleIdentifier
+        )
+        
+        let authenticator = OAuth2PKCEAuthenticator()
+        authenticator.authenticate(parameters: parameters) { result in
+            switch result {
+            case .success(let accessTokenResponse):
+                self.spotifyAccessToken = accessTokenResponse.access_token
+            case .failure(let error):
+                print("Spotify Auth Error: \(error)")
+            }
+        }
+        clicked = true
+        print(clicked)
+    }
+}
+
+
