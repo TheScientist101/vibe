@@ -33,8 +33,17 @@ struct SongListViewSpotify: View {
                             .padding([.vertical, .trailing], 8)
                         VStack{
                             Text(SpotifyTrack.name)
+                                .font(.headline)
+                                .foregroundColor(Color.white)
+                                .bold(true)
+                                .frame(maxWidth: .infinity, alignment: .leading)
                             Text(SpotifyTrack.artistName)
+                                .font(.subheadline)
+                                .foregroundColor(Color.gray)
+                                .bold(true)
+                                .frame(maxWidth: .infinity, alignment: .leading)
                         }
+
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
