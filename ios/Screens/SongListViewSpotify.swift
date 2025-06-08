@@ -43,7 +43,8 @@ struct SongListViewSpotify: View {
                                 .bold(true)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
-
+                            Image(systemName: "play.fill")
+                                .font(.system(size: 24))
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
