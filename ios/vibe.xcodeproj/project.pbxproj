@@ -33,6 +33,7 @@
 				MainTabView.swift,
 				MusicProviderSelector.swift,
 				PlayerStatusBar.swift,
+				PlayerStatusBarSpotify.swift,
 				SearchMusicView.swift,
 				SearchMusicViewSpotify.swift,
 				Settings.swift,

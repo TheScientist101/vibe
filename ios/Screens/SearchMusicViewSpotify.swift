@@ -9,6 +9,7 @@ struct SearchMusicViewSpotify: View {
     @AppStorage("musicProvider") var musicProvider: MusicProvider = .apple
     @AppStorage("auth0IdToken") private var idToken: String = "" // set this after login
     @AppStorage("spotifyAccessToken") private var spotifyAccessToken: String = ""
+//    @ObservableObject("currentSong") var currentSong: SpotifyTrack
     @State private var spotifyTracks: [SpotifyTrack] = []
     @State private var searchTerm: String = ""
     @State private var isLoading: Bool = false
@@ -22,9 +23,6 @@ struct SearchMusicViewSpotify: View {
                 .background(Color.gray.opacity(0.2))
                 .cornerRadius(12)
                 .multilineTextAlignment(.center)
-//                .onAppear {
-//                    
-//                }
 
             if isLoading {
                 ProgressView()
@@ -41,16 +39,6 @@ struct SearchMusicViewSpotify: View {
         }
         .padding()
         .preferredColorScheme(.dark)
-//        .alert(isPresented: $noActiveDeviceAvailable){
-//            Alert(
-//                title: Text("Open Spotify"),
-//                message: Text("Please open the Spotify app so we can play music."),
-//                primaryButton: .default(Text("Open App"), action: {
-//                    UIApplication.shared.open(URL(string: "spotify://")!)
-//                }),
-//                secondaryButton: .cancel()
-//            )
-//        }
         .alert("Open Spotify", isPresented: $noActiveDeviceAvailable) {
             Button("Open App") {
                 if let url = URL(string: "spotify://") {
@@ -128,8 +116,10 @@ struct SearchMusicViewSpotify: View {
                             print(str ?? "")
                         }
                     }
-
                     task.resume()
+                }
+                DispatchQueue.main.async {
+                    SpotifyManager.shared.currentTrack = track
                 }
             } else {
                 noActiveDeviceAvailable = true

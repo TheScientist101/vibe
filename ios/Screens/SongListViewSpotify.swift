@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import MusicKit
 
 struct SongListViewSpotify: View {
     let songs: [SpotifyTrack]

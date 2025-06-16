@@ -30,7 +30,6 @@ struct ContentView: View {
     @AppStorage("firstPickup") private var firstPickup = true
     @AppStorage("musicProvider") var musicProvider: MusicProvider = .apple
     @ObservedObject private var playerState = ApplicationMusicPlayer.shared.state
-    
 
     var body: some View {
         ZStack {
@@ -53,7 +52,12 @@ struct ContentView: View {
                     .cornerRadius(20)
             }
             MainTabView()
-            PlayerStatusBar(playerState: playerState)
+            if musicProvider == .apple {
+                PlayerStatusBar(playerState: playerState)
+            }
+            else {
+                PlayerStatusBarSpotify()
+            }
         }
         .fullScreenCover(isPresented: $showStartScreen) {
             StartView(onStart: startGroove)
