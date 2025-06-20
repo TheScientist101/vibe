@@ -13,26 +13,52 @@ struct PlayerStatusBarSpotify: View {
     @ObservedObject var manager = SpotifyManager.shared
 
     var body: some View {
-        VStack {
-            Spacer()
-            HStack {
-                AsyncImage(url: URL(string: manager.currentTrack?.album.imageUrl ?? "")) { image in
-                    image
-                        .resizable()
-                        .scaledToFill()
-                } placeholder: {
-                    ProgressView()
-                }
-                    .frame(width: 15, height: 15)
+        GeometryReader { geometry in
+            VStack {
+                Spacer()
+                HStack(spacing: 12) {
+                    AsyncImage(url: URL(string: manager.currentTrack?.album.imageUrl ?? "")) { image in
+                        image
+                            .resizable()
+                            .scaledToFill()
+                    } placeholder: {
+                        
+                    }
+                    .frame(width: 50, height: 50, alignment: .leading)
                     .cornerRadius(8)
-                    .padding([.vertical, .trailing], 8)
-                
-//                Text("No music playing???")
-////                    .frame(maxWidth: .infinity, maxHeight: 1)
-//                    .frame(maxHeight: 1)
-//                    .foregroundColor(.red)
-//                    .padding(60)
+                    .frame(alignment: .leading)
+                    VStack(alignment: .leading, spacing: 15){
+                        Text(manager.currentTrack?.name ?? "")
+                            .frame(maxHeight: 1, alignment: .leading)
+                            .foregroundColor(.white)
+                        Text(manager.currentTrack?.artistName ?? "")
+                            .frame(maxHeight: 1, alignment: .leading)
+                            .foregroundColor(.white)
+                            .font(.system(size:10))
+                    }
+                    Spacer()
+                    if let _ = manager.currentTrack?.name
+                    {
+                        Button(action:{
+                            manager.currentTrackPlaying = !manager.currentTrackPlaying
+                            print("is current track playing? -> " + String(manager.currentTrackPlaying))
+                            !manager.currentTrackPlaying ? manager.handlePausePressed(track: manager.currentTrack!) : manager.handleResumePressed(track: manager.currentTrack!)
+                        }) {
+                            Image(systemName: manager.currentTrackPlaying ? "pause.fill" : "play.fill")
+                                .foregroundStyle(.white)
+                                .font(.system(size: 20))
+                        }
+                        .frame(width: 44, height: 44)
+                    }
+                }
+                .background(Color.black.opacity(1))
+                .frame(idealWidth: .infinity, maxWidth: .infinity, alignment: .center)
+                .offset(y: -0.08 * geometry.size.height)//hardcoding the ui here
+                //            .padding(.bottom, 60)
             }
+//            .safeAreaInset(edge: .bottom) {
+//                Color.clear.frame(height: geometry.size.height * 0.5)
+//            }
         }
     }
 

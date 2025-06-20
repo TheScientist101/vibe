@@ -14,6 +14,7 @@ struct SearchMusicViewSpotify: View {
     @State private var searchTerm: String = ""
     @State private var isLoading: Bool = false
     @State private var noActiveDeviceAvailable: Bool = false
+    @ObservedObject var manager = SpotifyManager.shared
 
     var body: some View {
         VStack {
@@ -34,7 +35,7 @@ struct SearchMusicViewSpotify: View {
             SongListViewSpotify(
                 songs: spotifyTracks,
                 isPlaying: false,
-                onSelect: handlePlayPressed(track:)
+                onSelect: manager.handlePlayPressed(track:)
             )
         }
         .padding()
@@ -86,73 +87,7 @@ struct SearchMusicViewSpotify: View {
         
     }
     
-    private func handlePlayPressed(track: SpotifyTrack) {
-        print("before search: " + String(noActiveDeviceAvailable))
-        checkSpotifyDeviceStatus(accessToken: spotifyAccessToken) { isActive in
-            if isActive {
-                noActiveDeviceAvailable = false
-                Task {
-                    let payload: [String: Any] = [
-                        "uris": [track.uri],
-                        "position_ms": 0
-                    ]
-                    let data = try! JSONSerialization.data(withJSONObject: payload, options: [])
-                    let url = URL(string: "https://api.spotify.com/v1/me/player/play")!
-                    let headers = [
-                        "Authorization": "Bearer \(spotifyAccessToken)",
-                        "Content-Type": "application/json"
-                    ]
-
-                    var request = URLRequest(url: url)
-                    request.httpMethod = "PUT"
-                    request.allHTTPHeaderFields = headers
-                    request.httpBody = data as Data
-
-                    let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                        if let error = error {
-                            print(error)
-                        } else if let data = data {
-                            let str = String(data: data, encoding: .utf8)
-                            print(str ?? "")
-                        }
-                    }
-                    task.resume()
-                }
-                DispatchQueue.main.async {
-                    SpotifyManager.shared.currentTrack = track
-                }
-            } else {
-                noActiveDeviceAvailable = true
-                return
-            }
-        }
-    }
     
-    func checkSpotifyDeviceStatus(accessToken: String, completion: @escaping (Bool) -> Void) {
-        guard let url = URL(string: "https://api.spotify.com/v1/me/player/devices") else {
-            completion(false)
-            return
-        }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.setValue("Bearer \(spotifyAccessToken)", forHTTPHeaderField: "Authorization")
-
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data,
-                  let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-                  let devices = json["devices"] as? [[String: Any]] else {
-                completion(false)
-                return
-            }
-
-            let hasActiveDevice = devices.contains { device in
-                return device["is_active"] as? Bool == true
-            }
-
-            completion(hasActiveDevice)
-        }.resume()
-    }
 
 }
 

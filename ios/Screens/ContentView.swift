@@ -40,24 +40,26 @@ struct ContentView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.black)
                     .ignoresSafeArea()
-                    .zIndex(1)
+                    .zIndex(3)
                     .transition(.opacity)
             }
             if !firstPickup && musicProvider == .spotify{
                 SignInButton()
-                    .zIndex(2)
+                    .zIndex(4)
                     .frame(width: 120, height: 50)
                     .foregroundStyle(.white)
                     .bold()
                     .cornerRadius(20)
             }
-            MainTabView()
             if musicProvider == .apple {
+                MainTabView()
                 PlayerStatusBar(playerState: playerState)
             }
             else {
+                MainTabView()
                 PlayerStatusBarSpotify()
             }
+            
         }
         .fullScreenCover(isPresented: $showStartScreen) {
             StartView(onStart: startGroove)
@@ -81,6 +83,7 @@ struct SignInButton: UIViewControllerRepresentable {
 
 class SignInViewController: UIViewController {
     @AppStorage("spotifyAccessToken") var spotifyAccessToken : String = ""
+    @ObservedObject var manager = SpotifyManager.shared
     private var signInButton: UIButton!
     private var clicked: Bool = false {
         didSet {
@@ -140,6 +143,7 @@ class SignInViewController: UIViewController {
             switch result {
             case .success(let accessTokenResponse):
                 self.spotifyAccessToken = accessTokenResponse.access_token
+                self.manager.spotifyAccessToken = self.spotifyAccessToken
             case .failure(let error):
                 print("Spotify Auth Error: \(error)")
             }
