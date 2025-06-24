@@ -148,6 +148,9 @@ class SignInViewController: UIViewController {
                 print("Spotify Auth Error: \(error)")
             }
         }
+        
+        
+        
         clicked = true
         print(clicked)
     }

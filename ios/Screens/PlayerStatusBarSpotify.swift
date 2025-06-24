@@ -33,8 +33,8 @@ struct PlayerStatusBarSpotify: View {
                             .foregroundColor(.white)
                         Text(manager.currentTrack?.artistName ?? "")
                             .frame(maxHeight: 1, alignment: .leading)
-                            .foregroundColor(.white)
-                            .font(.system(size:10))
+                            .foregroundColor(.gray)
+                            .font(.system(size:11))
                     }
                     Spacer()
                     if let _ = manager.currentTrack?.name
@@ -54,18 +54,7 @@ struct PlayerStatusBarSpotify: View {
                 .background(Color.black.opacity(1))
                 .frame(idealWidth: .infinity, maxWidth: .infinity, alignment: .center)
                 .offset(y: -0.08 * geometry.size.height)//hardcoding the ui here
-                //            .padding(.bottom, 60)
             }
-//            .safeAreaInset(edge: .bottom) {
-//                Color.clear.frame(height: geometry.size.height * 0.5)
-//            }
         }
     }
-
-//    private var currentTrackTitle: String {
-//        if playerState.playbackStatus == .playing {
-//            return ApplicationMusicPlayer.shared.queue.currentEntry?.title ?? "No music playing"
-//        }
-//        return "No music playing"
-//    }
 }

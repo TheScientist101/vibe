@@ -30,8 +30,7 @@ struct MainTabView: View {
                         Label("Settings", systemImage: "gear")
                     }
             }
-//            .background(Color.red.opacity(1))
-//            .frame(maxWidth: .infinity, maxHeight: geometry.size.height*0.15, alignment:.bottomTrailing)
+            .accentColor(.white)
         }
     }
 }

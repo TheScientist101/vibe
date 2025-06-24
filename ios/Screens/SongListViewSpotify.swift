@@ -36,11 +36,13 @@ struct SongListViewSpotify: View {
                                 .foregroundColor(Color.white)
                                 .bold(true)
                                 .frame(maxWidth: .infinity, alignment: .leading)
+                                .lineLimit(1)
                             Text(SpotifyTrack.artistName)
                                 .font(.subheadline)
                                 .foregroundColor(Color.gray)
                                 .bold(true)
                                 .frame(maxWidth: .infinity, alignment: .leading)
+                                .lineLimit(1)
                         }
                             Image(systemName: "play.fill")
                                 .font(.system(size: 24))
