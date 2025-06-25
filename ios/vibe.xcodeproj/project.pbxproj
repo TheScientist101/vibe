@@ -28,7 +28,6 @@
 		290BBBBC2DCEDF2000CE10CC /* Exceptions for "Screens" folder in "vibe" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				ConnectButton.swift,
 				ContentView.swift,
 				MainTabView.swift,
 				MusicProviderSelector.swift,
@@ -380,7 +379,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "SupportingFiles/vibe-Info.plist";
-				INFOPLIST_KEY_NSAppleMusicUsageDescription = "We need to be able to control what music is playing.";
+				INFOPLIST_KEY_NSAppleMusicUsageDescription = "We need to be able to control what music is playing(ignore if you are a Spotify user)";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -415,7 +414,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "SupportingFiles/vibe-Info.plist";
-				INFOPLIST_KEY_NSAppleMusicUsageDescription = "We need to be able to control what music is playing.";
+				INFOPLIST_KEY_NSAppleMusicUsageDescription = "We need to be able to control what music is playing(ignore if you are a Spotify user)";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
