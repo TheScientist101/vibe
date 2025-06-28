@@ -49,7 +49,7 @@ struct ContentView: View {
             }
             else {
                 MainTabView()
-                PlayerStatusBarSpotify()
+                PlayerStatusBarSpotifyPrecise()
             }
             
         }
