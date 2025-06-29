@@ -32,7 +32,7 @@ struct SearchMusicViewSpotify: View {
                         primaryButton: .default(
                             Text("Connect to Spotify")
                                 .foregroundStyle(.green),
-                            action: signIn
+                            action: manager.signIn
                         ),
                         secondaryButton: .destructive(
                             Text("Cancel"),
@@ -70,8 +70,7 @@ struct SearchMusicViewSpotify: View {
 
     }
     private func searchMusic() {
-        if(!manager.spotifyAccessToken.isEmpty) {connectedToSpotify = true}
-        alertOn = !connectedToSpotify && manager.spotifyAccessToken == ""
+        alertOn = !connectedToSpotify && manager.spotifyRefreshToken.isEmpty
         if(alertOn) {
             return;
         }
@@ -84,107 +83,27 @@ struct SearchMusicViewSpotify: View {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.setValue("Bearer \(manager.spotifyAccessToken)", forHTTPHeaderField: "Authorization")
-        
-//        guard let refreshUrl = URL(string: "https://accounts.spotify.com/api/token") else {
-//            print("Invalid refresh URL")
-//            return
-//        }
-//        var refreshTokenRequest = URLRequest(url: refreshUrl)
-//        refreshTokenRequest.httpMethod = "POST"
-//        refreshTokenRequest.setValue("Basic ", forHTTPHeaderField: "Basic")
-        //^Was for refresh token request
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
                 do {
                     let searchResponse = try JSONDecoder().decode(SpotifySearchResponse.self, from: data)
                     self.spotifyTracks = searchResponse.tracks.items
+                    print("accessToken: " + manager.spotifyAccessToken)
+                    print("refreshToken: " + manager.spotifyRefreshToken)
+//                    print("refreshTokenExpiration" + )
                 } catch {
                     print("Error parsing Spotify response: \(error)")
                 }
             }
         }
+        manager.connectedToSpotify = true
         task.resume()
         
     }
-    
-    
-//    private func signIn(_ sender: Any) {
-    private func signIn() {
-        let bundleIdentifier = Bundle.main.bundleIdentifier!
-        let spotifyClientId = Bundle.main.object(forInfoDictionaryKey: "SpotifyClientId") as! String
-        let authorizeURL = "https://accounts.spotify.com/authorize"
-        let tokenURL = "https://accounts.spotify.com/api/token"
-        let redirectUri = "\(bundleIdentifier)://callback"
-        let parameters = OAuth2PKCEParameters(
-            authorizeUrl: authorizeURL,
-            tokenUrl: tokenURL,
-            clientId: spotifyClientId,
-            redirectUri: redirectUri,
-            callbackURLScheme: bundleIdentifier
-        )
-        
-        let authenticator = OAuth2PKCEAuthenticator()
-        authenticator.authenticate(parameters: parameters) { result in
-            switch result {
-            case .success(let accessTokenResponse):
-                self.manager.spotifyAccessToken = accessTokenResponse.access_token
-                connectedToSpotify = true
-            case .failure(let error):
-                print("Spotify Auth Error: \(error)")
-            }
-        }
-        Task {
-            await self.getRefreshToken()
-        }
-    }
-    
-    private func getRefreshToken() async {
-        let refreshToken = manager.spotifyRefreshToken
-        guard !refreshToken.isEmpty else{
-            print("No refresh token available")
-            return
-        }
-        let spotifyClientId = Bundle.main.object(forInfoDictionaryKey: "SpotifyClientId") as! String
-        let url = URL(string: "https://accounts.spotify.com/api/token")!
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        
-        var components = URLComponents()
-        components.queryItems = [
-            URLQueryItem(name: "grant-type", value: "refresh_token"),
-            URLQueryItem(name: "refresh_token", value: refreshToken),
-            URLQueryItem(name: "client_id", value: spotifyClientId)
-        ]
-        request.httpBody = components.query?.data(using: .utf8)
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(for: request)
-            let response = try JSONDecoder().decode(TokenResponse.self, from: data)
-            
-            manager.spotifyAccessToken = response.access_token
-            
-            if let newRefreshToken = response.refresh_token {
-                manager.spotifyRefreshToken = newRefreshToken
-            }
-            
-            print("successfully refreshed access token")
-        } catch {
-            print("Error refreshing token: \(error)")
-        }
-    }
 
 }
 
-struct TokenResponse: Codable {
-    let access_token: String
-    let token_type: String
-    let expires_in: Int
-    let refresh_token: String?
-    let scope: String?
-}
 
 //#Preview {
 //    SearchMusicViewSpotify()

@@ -11,6 +11,7 @@ import UIKit
 struct MusicProviderSelector: View {
     @Binding var firstPickup: Bool
     @AppStorage("musicProvider") var musicProvider: MusicProvider = .apple
+    @ObservedObject var manager = SpotifyManager.shared
     
     var body: some View {
         VStack {
@@ -20,6 +21,7 @@ struct MusicProviderSelector: View {
                 musicProvider = .spotify
                 firstPickup = false
                 print(musicProvider)
+                manager.signIn()
             }) {
                 Text("Spotify")
             }

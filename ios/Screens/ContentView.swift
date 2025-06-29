@@ -13,18 +13,6 @@ public enum MusicProvider: String{
     case apple
 }
 
-struct ConnectButtonWrapper: UIViewRepresentable {
-    let connectButton: UIButton
-    
-    func makeUIView(context: Context) -> UIButton {
-        return connectButton
-    }
-    
-    func updateUIView(_ uiView: UIButton, context: Context) {
-        
-    }
-}
-
 struct ContentView: View {
     @State private var showStartScreen: Bool = true
     @AppStorage("firstPickup") private var firstPickup = true

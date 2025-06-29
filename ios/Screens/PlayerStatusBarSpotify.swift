@@ -48,7 +48,7 @@ struct PlayerStatusBarSpotifyPrecise: View {
                     if let _ = manager.currentTrack?.name {
                         Button(action: {
                             manager.currentTrackPlaying = !manager.currentTrackPlaying
-                            print("is current track playing? -> " + String(manager.currentTrackPlaying))
+//                            print("is current track playing? -> " + String(manager.currentTrackPlaying))
                             !manager.currentTrackPlaying ? manager.handlePausePressed(track: manager.currentTrack!) : manager.handleResumePressed(track: manager.currentTrack!)
                         }) {
                             Image(systemName: manager.currentTrackPlaying ? "pause.fill" : "play.fill")
