@@ -14,6 +14,10 @@ struct MainTabView: View {
                 .tabItem {
                     Label("Find Music", systemImage: "music.note")
                 }
+            Connect()
+                .tabItem {
+                    Label("Connect", systemImage: "person.crop.circle")
+                }
             Settings()
                 .tabItem {
                     Label("Settings", systemImage: "gear")

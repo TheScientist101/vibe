@@ -9,21 +9,21 @@ import SwiftUI
 
 struct MainTabViewSpotify: View {
     @AppStorage("musicProvider") var musicProvider: MusicProvider = .apple
-    @Binding var selectedTab: Int
     var body: some View {
         GeometryReader{ geometry in
-            TabView(selection: $selectedTab) {
+            TabView{
                 SearchMusicViewSpotify()
                     .tabItem {
                         Label("Find Music", systemImage: "music.note")
                     }
-                    .tag(0)
-                
+                Connect()
+                    .tabItem {
+                        Label("Connect", systemImage: "person.crop.circle")
+                    }
                 Settings()
                     .tabItem {
                         Label("Settings", systemImage: "gear")
                     }
-                    .tag(1)
             }
             .accentColor(.white)
             

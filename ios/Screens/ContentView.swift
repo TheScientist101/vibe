@@ -40,12 +40,11 @@ struct ContentView: View {
                     PlayerStatusBar(playerState: playerState)
                 }
                 else {
-                    MainTabViewSpotify(selectedTab: $selectedTab)
+                    MainTabViewSpotify()
                     PlayerStatusBarSpotifyPrecise()
                     if !manager.connectedToSpotify {
                         Button(action:{
                             popupShown.toggle()
-//                            goToSettings()
                             manager.signIn()
                         })
                         {
@@ -80,9 +79,5 @@ struct ContentView: View {
     private func startGroove() {
         showStartScreen = false
         firstPickup = true
-    }
-    
-    private func goToSettings() {
-        selectedTab = 1
     }
 }

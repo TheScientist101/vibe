@@ -28,6 +28,7 @@
 		290BBBBC2DCEDF2000CE10CC /* Exceptions for "Screens" folder in "vibe" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Connect.swift,
 				ContentView.swift,
 				MainTabView.swift,
 				MainTabViewSpotify.swift,
