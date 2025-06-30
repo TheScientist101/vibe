@@ -30,6 +30,7 @@
 			membershipExceptions = (
 				ContentView.swift,
 				MainTabView.swift,
+				MainTabViewSpotify.swift,
 				MusicProviderSelector.swift,
 				PlayerStatusBar.swift,
 				PlayerStatusBarSpotify.swift,

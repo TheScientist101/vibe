@@ -70,7 +70,19 @@ struct SearchMusicViewSpotify: View {
 
     }
     private func searchMusic() {
-        alertOn = !connectedToSpotify && manager.spotifyRefreshToken.isEmpty
+        guard let accessToken = manager.spotifyToken?.access_token else {
+            print("no accessToken in search music function")
+            return
+        }
+        guard let refreshToken = manager.spotifyToken?.refresh_token else {
+            print("no refreshToken in search music function")
+            return
+        }
+        guard let expDate = manager.spotifyToken?.expires_in else {
+            print("no expiration date available in search music function")
+            return
+        }
+        alertOn = !connectedToSpotify && refreshToken.isEmpty
         if(alertOn) {
             return;
         }
@@ -82,15 +94,19 @@ struct SearchMusicViewSpotify: View {
         }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.setValue("Bearer \(manager.spotifyAccessToken)", forHTTPHeaderField: "Authorization")
+//        request.setValue("Bearer \(manager.spotifyAccessToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
                 do {
                     let searchResponse = try JSONDecoder().decode(SpotifySearchResponse.self, from: data)
                     self.spotifyTracks = searchResponse.tracks.items
-                    print("accessToken: " + manager.spotifyAccessToken)
-                    print("refreshToken: " + manager.spotifyRefreshToken)
+//                    print("accessToken: " + manager.spotifyToken?.access_token ?? "no accessToken")
+//                    print("refreshToken: " + manager.spotifyToken?.refresh_token ?? "no refreshToken")
+                    print("accessToken: " + accessToken)
+                    print("refreshToken: " + refreshToken)
+                    print("expiration time" + String(expDate))
 //                    print("refreshTokenExpiration" + )
                 } catch {
                     print("Error parsing Spotify response: \(error)")

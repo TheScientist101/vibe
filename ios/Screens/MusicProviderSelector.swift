@@ -22,6 +22,7 @@ struct MusicProviderSelector: View {
                 firstPickup = false
                 print(musicProvider)
                 manager.signIn()
+//                print(manager.connectedToSpotify)
             }) {
                 Text("Spotify")
             }
