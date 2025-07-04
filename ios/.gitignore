@@ -132,3 +132,4 @@ iOSInjectionProject/
 # End of https://www.toptal.com/developers/gitignore/api/swift,xcode,Cobjective-c,osx
 
 SpotifyController.swift
+SupportingFiles/GoogleService-Info.plist
